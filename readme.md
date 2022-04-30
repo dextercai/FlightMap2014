@@ -16,4 +16,4 @@
 
 ## 预览
 
-!()[snap.png]
+![snap.png](https://github.com/dextercai/FlightMap2014/blob/main/snap.png)]
