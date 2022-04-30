@@ -1,0 +1,229 @@
+<!-- DexterCai 2014-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>联飞地图</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <script language="javascript" src="http://webapi.amap.com/maps?v=1.3&key=KEY"></script>
+        <script src="images/jquery.js"></script>
+        <style type="text/css">
+            *{  
+                scrollbar-face-color:#F3F3F3;   
+                scrollbar-arrow-color:#C0C0C0; 
+                scrollbar-3dlight-color:#C0C0C0;   
+                scrollbar-highlight-color:#FFFFFF; 
+                scrollbar-shadow-color:#FFFFFF;
+                scrollbar-darkshadow-color:#C0C0C0;   
+                scrollbar-track-color:#F3F3F3; 
+            }  
+            ::-webkit-scrollbar{  
+                width:14px;  
+            }  
+            ::-webkit-scrollbar-button {  
+
+            }  
+            ::-webkit-scrollbar-track{  
+                background-color:#F3F3F3;  /*滑道全部*/  
+            }  
+            ::-webkit-scrollbar-track-piece{  
+                background-color:#F3F3F3;  /*滑道*/  
+                -webkit-border-radius:4px; /*滑道圆角宽度*/  
+            }  
+            ::-webkit-scrollbar-thumb{  
+                background-color:#F3F3F3; /*滑动条表面*/  
+                border:solid 1px #C0C0C0; /*滑动条边框*/  
+                border-radius:4px;  /*滑动条圆角宽度*/  
+            }  
+            /*横竖滚动条交角*/  
+            ::-webkit-scrollbar-corner {  
+                background-color: #F3F3F3;  
+            }  
+            /*横竖滚动条交角图案*/  
+            ::-webkit-resizer {  
+                /*background-image: url(/public/img/resizer-inactive.png);*/  
+                background-repeat: no-repeat;  
+                background-position: bottom right;  
+            }  
+            /*鼠标滑过滑动条*/  
+            ::-webkit-scrollbar-thumb:hover{  
+                background-color:#F3F3E0;  
+            }  
+            html {
+                background-color: #333;
+            }
+            body,td,th {
+                font-size: 12px;
+            }
+            body {
+                background-color: #333;
+                margin-left: 0px;
+                margin-top: 0px;
+                margin-right: 0px;
+                margin-bottom: 0px;
+            }
+            #listpolit{
+                text-align: center;
+                background-color:  #FFF;
+                width:300px;
+                overflow-y: scroll;
+                overflow-x: hidden;
+            }
+            #iCenter {
+                height:800px;
+                border:0px;
+            }
+            #msg_txt{
+                background-color: #b4b4ed;
+                width:100%;
+                height:34px;
+                z-index:9999;
+                position:absolute;
+                left: 0px;
+                top: 23px;
+                color: #333;
+                text-align: center;
+            }
+            div.info{
+                width:80px;
+                height:20px;
+            }
+            a:link {
+                color: #333;
+                text-decoration: none;
+            }
+            a:visited {
+                text-decoration: none;
+                color: #333;
+            }
+            a:hover {
+                text-decoration: none;
+                color: #000;
+            }
+            a:active {
+                text-decoration: none;
+                color: #000;
+            }
+            dd{
+                width: 270px;
+                background-color: #d5d5e6;
+            }
+            #politmsg{
+                text-align: left;
+                margin-left: 30px;
+                width: 220px;
+                display: none;
+            }
+            #atcmsg{
+                text-align: left;
+                margin-left: 30px;
+                width: 220px;
+                display: none;
+            }
+            #tip{
+                background-color:#fff;
+                border:1px solid #ccc;
+                padding-left:10px;
+                padding-right:2px;
+                position:absolute;
+                min-height:65px;
+                top:10px;
+                font-size:12px;
+                right:100px;
+                border-radius:3px;
+                overflow:hidden;
+                line-height:20px;
+                min-width:400px;
+            }
+            #tip input[type="button"]{
+                background-color: #0D9BF2;
+                height:25px;
+                text-align:center;
+                line-height:25px;
+                color:#fff;
+                font-size:12px;
+                border-radius:3px;
+                outline: none;
+                border:0;
+                cursor:pointer;
+            }
+
+            #tip input[type="text"]{
+                height:25px;
+                border:1px solid #ccc;
+                padding-left:5px;
+                border-radius:3px;
+                outline:none;
+            }
+
+            #result1{
+                max-height:300px;
+            }
+			hr{
+				margin-top: 2px;
+				margin-bottom: 2px;
+			}
+        </style>
+        <script src="images/map.js?r=1.3" type="text/javascript"></script>
+    </head>
+    <body onLoad="mapInit()">
+        <table width="100%" height="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <div id="listpolit">
+                        <div style="width:270px;background-color:#b4b4ed;height:30px;line-height:30px; vertical-align: middle; font-size: 14px; margin-bottom: 1px">在线：[6]&nbsp;&nbsp;更新:[<span id="lasttime"></span>]</div>
+                        <div style="width:270px;background-color:#b4b4ed;height:30px;line-height:30px; vertical-align: middle; font-size: 16px"><b>管制列表</b></div>
+                        <dl id="al">
+                        </dl>
+                        <br />
+                        <div style="width:270px;background-color:#b4b4ed;height:30px;line-height:30px; vertical-align: middle; font-size: 16px"><b>机组列表</b></div>
+                        <dl id="pl">
+                        </dl>
+                        <br />
+                        <div style="width:270px;background-color:#b4b4ed;height:30px;line-height:30px; vertical-align: middle; font-size: 16px"><b><span id="pc_txt"></span></b></div>
+                        <div id="atcmsg">
+                            基础信息：<br/>
+                            ID：<span id="ac_id"></span><br/>
+                            管制席位：<span id="ac_call"></span><br/>
+                            管制频率：<span id="ac_wave"></span><br/>
+                            <br/>
+                            <span id="ac_title"></span><br/>
+                        </div>
+                        <div id="politmsg">
+                            基础信息：<br/>
+                            ID：<span id="pc_id"></span><br/>
+                            <img id="pc_img" width="220" height="150"/><br/>
+                            呼号：<span id="pc_call"></span><br/>
+                            <span id="pc_title"></span><br/>
+                            当前状态：<br/>
+                            经度：<span id="pc_x"></span><br/>
+                            纬度：<span id="pc_y"></span><br/>
+                            高度：<span id="pc_height"></span><br/>
+                            地速：<span id="pc_speed"></span><br/>
+                            机型：<span id="pc_type"></span><br/>
+                            应答机：<span id="pc_talk"></span><br/>
+                            <hr/>
+                            计划面板：<br/>
+                            起飞机场：<span id="pc_start"></span><br/>
+                            降落机场：<span id="pc_end"></span><br/>
+                            巡航表速：<span id="pc_alt_speed"></span><br/>
+                            巡航高度：<span id="pc_alt"></span><br/>
+                            计划航路：<span id="pc_plan"></span><br/>
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div id="iCenter" >
+                    </div>
+                    <div id="tip">
+                        <b>请输入地址查询：</b>
+                        <input type="text" id="keyword" name="keyword" value="" onkeydown='keydown(event)' style="width: 95%;"/>
+                        <div id="result1" name="result1"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>						
