@@ -8,7 +8,7 @@
 <script language="javascript" src="http://webapi.amap.com/maps?v=1.3&key=KEY"></script>
 ```
 
-本项目不提供后续更新，按照MIT许可进行开源。如需相关技术咨询，欢迎联系。
+本项目不提供后续更新与技术支持，按照MIT许可进行开源。
 
 ## TIPS
 
@@ -16,4 +16,4 @@
 
 ## 预览
 
-![snap.png](https://github.com/dextercai/FlightMap2014/blob/main/snap.png)]
+![snap.png](https://github.com/dextercai/FlightMap2014/blob/main/snap.png)
